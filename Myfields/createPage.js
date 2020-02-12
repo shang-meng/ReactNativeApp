@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Form, Item, Input, Label, Picker } from 'native-base';
-import { Icon, Overlay, CheckBox } from 'react-native-elements';
+import { Icon, CheckBox, Header } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
 
 export default class CreatePage extends React.Component {
@@ -15,7 +15,9 @@ export default class CreatePage extends React.Component {
     }
 
     setDate = (newDate) => {
-        this.setState({ chosenData: newDate })
+        this.setState({
+            chosenDate: newDate
+        })
     }
     choseProject = (value) => {
         this.setState({
@@ -25,7 +27,17 @@ export default class CreatePage extends React.Component {
 
     render() {
         return (
-            <Overlay isVisible={this.props.isVisible} fullScreen={true}>
+            <View>
+                <View style={{backgroundColor:themeColor}}>
+                <Header
+                    style={{ borderBottomColor: themeColor}}
+                    containerStyle={{ borderBottomColor: themeColor }}
+                    backgroundColor='transparent'
+                    statusBarProps={{ translucent: true, backgroundColor: 'transparent' }}
+                    leftComponent={() => { return (<Icon name='arrow-back' color='#fff' onPress={() => this.props.navigation.goBack()}></Icon>) }}
+                    centerComponent={{ text: '新建页面', style: { color: '#fff', fontSize: 20 } }}
+                />
+                </View>
                 <Form>
                     <Item>
                         <Label style={styles.label}>巡检编号</Label>
@@ -46,16 +58,27 @@ export default class CreatePage extends React.Component {
                     <Item>
                         <Label style={styles.label}>巡检时间</Label>
                         <DatePicker
-                            defaultDate={new Date(2018, 4, 4)}
-                            minimumDate={new Date(2018, 1, 1)}
-                            maximumDate={new Date(2018, 12, 31)}
-                            locale={"en"}
-                            timeZoneOffsetInMinutes={undefined}
-                            modalTransparent={false}
-                            animationType={"fade"}
-                            onDateChange={this.setDate}
-                            disabled={false}
-                        />
+                            style={{ width: 200 }}
+                            date={this.state.chosenDate}
+                            mode="datetime"
+                            placeholder="请选择"
+                            format="YYYY-MM-DD hh:mm:ss"
+                            minDate="2016-05-01"
+                            maxDate="2026-06-01"
+                            confirmBtnText="Confirm"
+                            cancelBtnText="Cancel"
+                            customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                },
+                                dateInput: {
+                                    marginLeft: 36
+                                }
+                            }}
+                            onDateChange={(date) => this.setDate(date)} />
                     </Item>
                     <Item>
                         <Label style={styles.label}>巡检项目</Label>
@@ -64,8 +87,7 @@ export default class CreatePage extends React.Component {
                             style={styles.Input}
                             iosIcon={<Icon name="arrow-down" />}
                             selectedValue={this.state.chosenProject}
-                            onValueChange={this.choseProject}
-                        >
+                            onValueChange={this.choseProject}>
                             <Picker.Item label="请选择" value="key0" />
                             <Picker.Item label="物理网监控设备" value="key1" />
                             <Picker.Item label="管网基础设施" value="key2" />
@@ -96,10 +118,12 @@ export default class CreatePage extends React.Component {
                         <Input style={styles.Input} />
                     </Item>
                 </Form>
-            </Overlay>
+            </View>
         )
     }
 }
+
+const themeColor = '#20A0FF';
 
 const styles = StyleSheet.create({
     label: { width: 92 },
