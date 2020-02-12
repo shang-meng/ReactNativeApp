@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, StyleSheet, TextInput } from 'react-native';
+import { Text, View, FlatList, StyleSheet, Alert } from 'react-native';
 import CardView from 'react-native-cardview-wayne';
-import { Header, SearchBar, Tooltip, Icon, Button, Divider, Overlay, CheckBox } from 'react-native-elements';
-import { Form, Item, Input, Label, Picker, DatePicker} from 'native-base';
+import { Header, SearchBar, Tooltip, Icon, Button, Divider} from 'react-native-elements';
+import CreatePage from './Myfields/createPage'
 
 export default class AwesomeApp extends Component {
 
@@ -12,9 +12,7 @@ export default class AwesomeApp extends Component {
       search: '',
       data: [{ key: 'hello' }, { key: 'flatlist' }, { key: 'How' }, { key: 'are' }, { key: 'you' }],
       isVisible: false,
-      selected2: undefined
     }
-    this.updateIndex = this.updateIndex.bind(this);
   }
 
   renderItem(item) {
@@ -73,16 +71,11 @@ export default class AwesomeApp extends Component {
     this.setState({ search });
   };
 
-  updateIndex(selectedIndex) {
-    this.setState({ selectedIndex })
-  }
-
-  create() {
+  create = () => {
     this.setState({ isVisible: true });
-    console.log(this)
   }
 
-  rightComponent() {
+  rightComponent = () => {
     return (
       <Tooltip overlayColor='transparent' height={80} popover={
         <View>
@@ -97,6 +90,7 @@ export default class AwesomeApp extends Component {
             type='clear'
             title='扫一扫'
             titleStyle={{ color: '#fff' }}
+            onPress={this.hello}
           />
         </View>
       }>
@@ -105,90 +99,13 @@ export default class AwesomeApp extends Component {
     )
   }
 
-  onValueChange2(value) {
-    this.setState({
-      selected2: value
-    });
-  }
-
   render() {
     const { search } = this.state;
     const { data } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
-        <Overlay isVisible={this.state.isVisible}>
-          <Form>
-            <Item>
-              <Label style={styles.label}>巡检编号</Label>
-              <Input style={styles.Input} />
-            </Item>
-            <Item>
-              <Label style={styles.label}>SN号</Label>
-              <Input style={styles.Input} />
-            </Item>
-            <Item>
-              <Label style={styles.label}>RFIDID</Label>
-              <Input style={styles.Input} />
-            </Item>
-            <Item>
-              <Label style={styles.label}>巡检人</Label>
-              <Input style={styles.Input} />
-            </Item>
-            <Item>
-              <Label style={styles.label}>巡检时间</Label>
-              <DatePicker
-                defaultDate={new Date(2018, 4, 4)}
-                minimumDate={new Date(2018, 1, 1)}
-                maximumDate={new Date(2018, 12, 31)}
-                locale={"en"}
-                timeZoneOffsetInMinutes={undefined}
-                modalTransparent={false}
-                animationType={"fade"}
-                onDateChange={this.setDate}
-                disabled={false}
-              />
-            </Item>
-            <Item>
-              <Label style={styles.label}>巡检项目</Label>
-              <Picker
-                mode="dropdown"
-                style={styles.Input}
-                iosIcon={<Icon name="arrow-down" />}
-                selectedValue={this.state.selected2}
-                onValueChange={this.onValueChange2.bind(this)}
-              >
-                <Picker.Item label="请选择" value="key0" />
-                <Picker.Item label="物理网监控设备" value="key1" />
-                <Picker.Item label="管网基础设施" value="key2" />
-                <Picker.Item label="设施周边情况" value="key3" />
-              </Picker>
-            </Item>
-            <Item>
-              <Label style={styles.label}>巡检图片</Label>
-              <Input style={styles.Input} />
-            </Item>
-            <Item>
-              <Label style={styles.label}>是否异常</Label>
-              <CheckBox title='是' checked={true} />
-              <CheckBox title='否' checked={false} />
-            </Item>
-            <Item>
-              <Label style={styles.label}>异常类型</Label>
-              <Picker
-                mode="dropdown"
-                style={styles.Input}
-                iosIcon={<Icon name="arrow-down" />}
-              >
-                <Picker.Item label="请选择" value="key0" />
-              </Picker>
-            </Item>
-            <Item>
-              <Label style={styles.label}>异常内容</Label>
-              <Input style={styles.Input} />
-            </Item>
-          </Form>
-        </Overlay>
+        <CreatePage isVisible={this.state.isVisible}/>
 
         <View style={{ backgroundColor: themeColor }}>
           <Header
@@ -226,8 +143,6 @@ const styles = StyleSheet.create({
   title: { width: 92, marginLeft: 2, fontWeight: 'bold' },
   content: { marginLeft: 16, marginRight: 16, flex: 1 },
   containerStyle: { backgroundColor: 'transparent', borderBottomColor: themeColor, borderTopColor: themeColor },
-  label: { width: 92 },
-  input: { marginLeft: 16 }
 })
 
 
