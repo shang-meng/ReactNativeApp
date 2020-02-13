@@ -28,7 +28,7 @@ export default class CreateForm extends React.Component {
     }
     choseError = (value) => {
         this.setState({
-            chosenProject: value
+            chosenError: value
         })
     }
 
@@ -108,12 +108,11 @@ export default class CreateForm extends React.Component {
                             iosIcon={<Icon name="arrow-down" />}
                             selectedValue={this.state.chosenError}
                             onValueChange={this.choseError}>
-                            >
                             <Picker.Item label="请选择" value="key0" />
-                            <Picker.Item label="请选择" value="key1" />
-                            <Picker.Item label="请选择" value="key2" />
-                            <Picker.Item label="请选择" value="key3" />
-                            <Picker.Item label="请选择" value="key4" />
+                            <Picker.Item label="河面，河岸保洁" value="key1" />
+                            <Picker.Item label="河道观感" value="key2" />
+                            <Picker.Item label="排污口" value="key3" />
+                            <Picker.Item label="违法，倾倒，占用河道" value="key4" />
                         </Picker>
                     </Item>
                     <Item>
