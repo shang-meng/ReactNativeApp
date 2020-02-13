@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, FlatList, StyleSheet } from 'react-native';
 import CardView from 'react-native-cardview-wayne';
 import { Header, SearchBar, Tooltip, Icon, Button, Divider } from 'react-native-elements';
+import CheckList from '../component/checkList'
+
+const themeColor = '#20A0FF';
 
 export default class HomePage extends Component {
 
@@ -11,58 +14,6 @@ export default class HomePage extends Component {
             search: '',
             data: [{ key: 'hello' }, { key: 'flatlist' }, { key: 'How' }, { key: 'are' }, { key: 'you' }],
         }
-    }
-
-    renderItem(item) {
-        return (
-            <View>
-                <CardView
-                    style={{ marginHorizontal: 12 }}
-                    cardElevation={4}
-                    maxCardElevation={4}
-                    radius={10}
-                    backgroundColor={'#ffffff'}>
-                    <View style={{ padding: 10, margin: 12 }}>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>巡检编号</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>SN号</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>巡检时间</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>巡检人</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>巡检项目</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>巡检图片</Text>
-                            <Text style={styles.content}>-</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>是否异常</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>异常类型</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                        <View style={styles.container}>
-                            <Text style={styles.title}>异常内容</Text>
-                            <Text style={styles.content}>{item.key}</Text>
-                        </View>
-                    </View>
-                </CardView>
-            </View>
-        )
     }
 
     updateSearch = (search) => {
@@ -115,17 +66,11 @@ export default class HomePage extends Component {
                     />
                 </View>
 
-                <FlatList
-                    style={{ marginTop: 8 }}
-                    data={this.state.data}
-                    renderItem={({ item }) => this.renderItem(item)}
-                />
+                <CheckList data={this.state.data}></CheckList>
             </View>
         )
     }
 }
-
-const themeColor = '#20A0FF';
 
 const styles = StyleSheet.create({
     container: { flexDirection: 'row', marginTop: 3, marginBottom: 3 },

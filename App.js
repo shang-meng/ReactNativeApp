@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import CreatePage from './Myfields/createPage'
-import HomePage from './Myfields/homePage'
+import CreatePage from './src/create/createPage'
+import HomePage from './src/check/homePage'
 
 const Stack = createStackNavigator();
 

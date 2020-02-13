@@ -1,16 +1,18 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native';
 import { Form, Item, Input, Label, Picker } from 'native-base';
-import { Icon, CheckBox, Header } from 'react-native-elements';
+import { Icon, CheckBox } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
 
-export default class CreatePage extends React.Component {
+export default class CreateForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             chosenProject: undefined,
-            chosenDate: undefined
+            chosenDate: undefined,
+            chosenError: undefined,
+            isError: undefined
         }
     }
 
@@ -24,20 +26,15 @@ export default class CreatePage extends React.Component {
             chosenProject: value
         })
     }
+    choseError = (value) => {
+        this.setState({
+            chosenProject: value
+        })
+    }
 
     render() {
         return (
             <View>
-                <View style={{backgroundColor:themeColor}}>
-                <Header
-                    style={{ borderBottomColor: themeColor}}
-                    containerStyle={{ borderBottomColor: themeColor }}
-                    backgroundColor='transparent'
-                    statusBarProps={{ translucent: true, backgroundColor: 'transparent' }}
-                    leftComponent={() => { return (<Icon name='arrow-back' color='#fff' onPress={() => this.props.navigation.goBack()}></Icon>) }}
-                    centerComponent={{ text: '新建页面', style: { color: '#fff', fontSize: 20 } }}
-                />
-                </View>
                 <Form>
                     <Item>
                         <Label style={styles.label}>巡检编号</Label>
@@ -100,8 +97,8 @@ export default class CreatePage extends React.Component {
                     </Item>
                     <Item>
                         <Label style={styles.label}>是否异常</Label>
-                        <CheckBox title='是' checked={true} />
-                        <CheckBox title='否' checked={false} />
+                        <CheckBox title='是' checked={this.state.isError} onPress={() => { this.setState({ isError: true }) }} />
+                        <CheckBox title='否' checked={!this.state.isError} onPress={() => { this.setState({ isError: false }) }} />
                     </Item>
                     <Item>
                         <Label style={styles.label}>异常类型</Label>
@@ -109,8 +106,14 @@ export default class CreatePage extends React.Component {
                             mode="dropdown"
                             style={styles.Input}
                             iosIcon={<Icon name="arrow-down" />}
-                        >
+                            selectedValue={this.state.chosenError}
+                            onValueChange={this.choseError}>
+                            >
                             <Picker.Item label="请选择" value="key0" />
+                            <Picker.Item label="请选择" value="key1" />
+                            <Picker.Item label="请选择" value="key2" />
+                            <Picker.Item label="请选择" value="key3" />
+                            <Picker.Item label="请选择" value="key4" />
                         </Picker>
                     </Item>
                     <Item>
