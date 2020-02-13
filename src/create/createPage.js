@@ -1,6 +1,6 @@
 import React from 'react'
-import { View} from 'react-native';
-import { Icon, CheckBox, Header } from 'react-native-elements';
+import { View } from 'react-native';
+import { Icon, Header } from 'react-native-elements';
 import CreateForm from '../component/createForm'
 
 const themeColor = '#20A0FF';
@@ -21,6 +21,7 @@ export default class CreatePage extends React.Component {
                         backgroundColor='transparent'
                         statusBarProps={{ translucent: true, backgroundColor: 'transparent' }}
                         leftComponent={() => { return (<Icon name='arrow-back' color='#fff' onPress={() => this.props.navigation.goBack()}></Icon>) }}
+                        rightComponent={() => { return (<Icon name='save' color='#fff'></Icon>) }}
                         centerComponent={{ text: '新建页面', style: { color: '#fff', fontSize: 20 } }}
                     />
                 </View>
