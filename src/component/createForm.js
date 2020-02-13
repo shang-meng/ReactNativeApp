@@ -1,8 +1,10 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Form, Item, Input, Label, Picker } from 'native-base';
-import { Icon, CheckBox } from 'react-native-elements';
+import { Icon, CheckBox, Button } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
+import ImagePicker from 'react-native-image-crop-picker';
+import Textarea from 'react-native-textarea';
 
 export default class CreateForm extends React.Component {
 
@@ -12,7 +14,8 @@ export default class CreateForm extends React.Component {
             chosenProject: undefined,
             chosenDate: undefined,
             chosenError: undefined,
-            isError: undefined
+            isError: undefined,
+            textarea: ''
         }
     }
 
@@ -31,10 +34,21 @@ export default class CreateForm extends React.Component {
             chosenError: value
         })
     }
-
+    addImg = () => {
+        ImagePicker.openPicker({
+            multiple: true
+        }).then(images => {
+            console.log(images);
+        });
+    }
+    changeTextarea = (value) => {
+        this.setState({
+            textarea: value
+        })
+    }
     render() {
         return (
-            <View>
+            <ScrollView>
                 <Form>
                     <Item>
                         <Label style={styles.label}>巡检编号</Label>
@@ -93,12 +107,22 @@ export default class CreateForm extends React.Component {
                     </Item>
                     <Item>
                         <Label style={styles.label}>巡检图片</Label>
-                        <Input style={styles.Input} />
+                        <Button title="添加图片" onPress={this.addImg} type="clear" titleStyle={{ color: 'black' }} ></Button>
                     </Item>
                     <Item>
                         <Label style={styles.label}>是否异常</Label>
-                        <CheckBox title='是' checked={this.state.isError} onPress={() => { this.setState({ isError: true }) }} />
-                        <CheckBox title='否' checked={!this.state.isError} onPress={() => { this.setState({ isError: false }) }} />
+                        <CheckBox
+                            title='是'
+                            checkedIcon={<Icon name='check'></Icon>}
+                            containerStyle={{ backgroundColor: 'transparent' }}
+                            checked={this.state.isError}
+                            onPress={() => { this.setState({ isError: true }) }} />
+                        <CheckBox
+                            title='否'
+                            checkedIcon={<Icon name='check'></Icon>}
+                            containerStyle={{ backgroundColor: 'transparent' }}
+                            checked={!this.state.isError}
+                            onPress={() => { this.setState({ isError: false }) }} />
                     </Item>
                     <Item>
                         <Label style={styles.label}>异常类型</Label>
@@ -117,17 +141,28 @@ export default class CreateForm extends React.Component {
                     </Item>
                     <Item>
                         <Label style={styles.label}>异常内容</Label>
-                        <Input style={styles.Input} />
+                        <Textarea
+                            style={styles.textarea}
+                            onChangeText={this.changeTextarea}
+                            defaultValue={this.state.textarea}
+                            maxLength={500}
+                            underlineColorAndroid={'transparent'}
+                        />
                     </Item>
                 </Form>
-            </View>
+            </ScrollView>
         )
     }
 }
 
-const themeColor = '#20A0FF';
-
 const styles = StyleSheet.create({
     label: { width: 92 },
-    input: { marginLeft: 16 }
+    input: { marginLeft: 20 },
+    textarea: {
+        textAlignVertical: 'top',  // hack android
+        height: 170,
+        width: 300,
+        fontSize: 14,
+        color: '#333',
+    },
 })
